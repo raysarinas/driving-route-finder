@@ -7,6 +7,11 @@ from dijkstra import least_cost_path
 from build import load_edmonton_graph
 from cost import CostDistance
 
+def nearest_vertex():
+
+def output():
+
+def communicate():
 
 if __name__ == "__main__":
     # Code for processing route finding requests here
