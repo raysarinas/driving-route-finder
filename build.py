@@ -28,12 +28,11 @@ def load_edmonton_graph(filename):
 
                 if row[0] == "V":
                     graph.add_vertex(row[1])
-                    latitude = int((row[2])*100000)
-                    longitude = int((row[3])*100000)
+                    latitude = int(float(row[2]) * 100000)
+                    longitude = int(float(row[3]) * 100000)
                     location[row[1]] = [latitude, longitude]
-                    
+
                 elif row[0] == "E":
                     graph.add_edge((row[1], row[2]))
-                    graph.add_edge((row[2], row[1]))
 
         return graph, location

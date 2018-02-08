@@ -23,3 +23,17 @@ def least_cost_path(graph, start, dest, cost):
         Any two consecutive vertices correspond to some
         edge in graph.
 """
+
+reached = {}
+events = BinaryHeap()
+events.insert(start, 0)
+
+
+while len(events) > 0:
+    (u, v), time = events.popmin()
+    if v not in reached:
+        u = reached[v]
+        for: #each neighbour w of v
+            events.insert((v, w), time + cost(v, w))
+
+return reached
