@@ -1,3 +1,6 @@
+from graph import Graph
+from binary_heap import BinaryHeap
+
 def least_cost_path(graph, start, dest, cost):
 """Find and return a least cost path in graph from start vertex to dest vertex.
     Efficiency: If E is the number of edges, the run-time is
