@@ -26,14 +26,13 @@ def least_cost_path(graph, start, dest, cost):
 
 reached = {}
 events = BinaryHeap()
-events.insert(start, 0)
-
+events.insert(start, 0) # this line is probably wrong
 
 while len(events) > 0:
     (u, v), time = events.popmin()
     if v not in reached:
         u = reached[v]
-        for: #each neighbour w of v
+        for w in graph.neighbours(v):
             events.insert((v, w), time + cost(v, w))
 
 return reached
