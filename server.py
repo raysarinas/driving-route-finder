@@ -7,11 +7,21 @@ from dijkstra import least_cost_path
 from build import load_edmonton_graph
 from cost import CostDistance
 
-def nearest_vertex():
+request = input().strip().split(" ")
+print(request)
+valid = False
 
-def output():
+if request[0] == 'R':
+    valid = True
+else:
+    print('invalid request')
 
-def communicate():
+
+#def nearest_vertex():
+
+#def output():
+
+#def communicate():
 
 if __name__ == "__main__":
     # Code for processing route finding requests here

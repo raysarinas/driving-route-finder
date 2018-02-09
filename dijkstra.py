@@ -24,8 +24,8 @@ def least_cost_path(graph, start, dest, cost):
         edge in graph.
     """
 
-    reached = {} #empty dictionary
-    events = BinaryHeap() #empty heap
+    reached = {} # empty dictionary
+    events = BinaryHeap() # empty heap
     events.insert([start, start], 0) # vertex s burns at time 0
 
 

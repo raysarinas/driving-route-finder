@@ -1,7 +1,7 @@
 from graph import Graph
 
 def load_edmonton_graph(filename):
-"""
+    """
     Loads the graph of Edmonton from the given file.
     Returns two items
       graph: the instance of the class Graph() corresponding to the
@@ -15,23 +15,23 @@ def load_edmonton_graph(filename):
     (or whatever name you use for the variables).
     Note: the vertex identifiers should be converted to integers
       before being added to the graph and the dictionary.
-"""
-        # filename = 'edmonton-roads-2.0.1.txt'
+      """
+    # filename = 'edmonton-roads-2.0.1.txt'
 
-        with open(filename, 'r') as filename:
-            graph = Graph()
-            location = {}
+    with open(filename, 'r') as filename:
+        graph = Graph()
+        location = {}
 
-            for line in filename:
-                row = line.strip().split(",")
+        for line in filename:
+            row = line.strip().split(",")
 
-                if row[0] == "V":
-                    graph.add_vertex(row[1])
-                    latitude = int(float(row[2]) * 100000)
-                    longitude = int(float(row[3]) * 100000)
-                    location[row[1]] = [latitude, longitude]
+            if row[0] == "V":
+                graph.add_vertex(row[1])
+                latitude = int(float(row[2]) * 100000)
+                longitude = int(float(row[3]) * 100000)
+                location[row[1]] = [latitude, longitude]
 
-                elif row[0] == "E":
-                    graph.add_edge((row[1], row[2]))
+            elif row[0] == "E":
+                graph.add_edge((row[1], row[2]))
 
-        return graph, location
+    return graph, location

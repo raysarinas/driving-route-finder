@@ -1,5 +1,5 @@
-import graphviz
-from heapviz import *
+# import graphviz
+# from heapviz import *
 
 class BinaryHeap:
     """
