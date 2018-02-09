@@ -2,7 +2,7 @@ from graph import Graph
 from binary_heap import BinaryHeap
 
 def least_cost_path(graph, start, dest, cost):
-"""Find and return a least cost path in graph from start vertex to dest vertex.
+    """Find and return a least cost path in graph from start vertex to dest vertex.
     Efficiency: If E is the number of edges, the run-time is
       O( E log(E) ).
     Args:
@@ -22,21 +22,18 @@ def least_cost_path(graph, start, dest, cost):
         vertex is always start, the last is always dest in the list.
         Any two consecutive vertices correspond to some
         edge in graph.
-"""
+    """
 
-reached = {}
-events = BinaryHeap()
-<<<<<<< HEAD
-events.insert(start, 0)
-=======
-events.insert(start, 0) # this line is probably wrong
->>>>>>> 292825d364a4687d6d765fca5cd0c9e41a0ccbe6
+    reached = {} #empty dictionary
+    events = binHeap.BinaryHeap() #empty heap
+    events.insert([start, start], 0) # vertex s burns at time 0
 
-while len(events) > 0:
-    (u, v), time = events.popmin()
-    if v not in reached:
-        u = reached[v]
-        for w in graph.neighbours(v):
-            events.insert((v, w), time + cost(v, w))
 
-return reached
+    while len(events) > 0:
+        vertex, time = events.popmin()
+        if vertex[1] not in reached:
+            vertex[0] = reached[vertex[1]]  # burn vertex v, record predecessor u
+            for n in graph.neighbours(vertex[1]):  # new event: edge (v,w) started burning
+                events.insert(([edge[1]], n), time + cost.distance(vertex[1], n))
+
+    return reached
