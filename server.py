@@ -15,3 +15,4 @@ def communicate():
 
 if __name__ == "__main__":
     # Code for processing route finding requests here
+    yegGraph = load_edmonton_graph('edmonton-roads-2.0.1.txt')
