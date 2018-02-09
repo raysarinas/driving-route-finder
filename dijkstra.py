@@ -28,7 +28,6 @@ reached = {}
 events = BinaryHeap()
 events.insert(start, 0)
 
-
 while len(events) > 0:
     (u, v), time = events.popmin()
     if v not in reached:
