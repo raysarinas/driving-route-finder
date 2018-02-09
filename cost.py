@@ -24,4 +24,4 @@ def distance(self, e):
         lon1, lat1 = self.location[u]
         lon2, lat2 = self.location[v]
         e_dist = math.sqrt( (lat2[0] - lat1[0])**2 + (lon2[1] - lon1[1])**2 )
-        return e_dist
+        return int(e_dist)

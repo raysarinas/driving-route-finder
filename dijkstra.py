@@ -25,15 +25,39 @@ def least_cost_path(graph, start, dest, cost):
     """
 
     reached = {} #empty dictionary
-    events = binHeap.BinaryHeap() #empty heap
+    events = BinaryHeap() #empty heap
     events.insert([start, start], 0) # vertex s burns at time 0
 
 
     while len(events) > 0:
-        vertex, time = events.popmin()
-        if vertex[1] not in reached:
-            vertex[0] = reached[vertex[1]]  # burn vertex v, record predecessor u
-            for n in graph.neighbours(vertex[1]):  # new event: edge (v,w) started burning
-                events.insert(([edge[1]], n), time + cost.distance(vertex[1], n))
+        vertices, time = events.popmin()
+        if vertices[1] not in reached:
+            vertices[0] = reached[vertices[1]]  # burn vertex v, record predecessor u
+            for n in graph.neighbours(vertices[1]):  # new event: edge (v,w) started burning
+                events.insert(([vertices[1]], n), time + cost.distance(vertices[1], n))
 
-    return reached
+            if vertices[1] == dest:
+                break
+
+    #return reached
+
+    #find path to see if a path exists
+    # return empty list if dest cannot be reached/if no path from start to dest exists
+    if dest not in reached:
+      return []
+
+    # if the destination gets reached we can form a minimum path
+    if dest in reached:
+        current = dest
+        path = [current]
+
+        while current != start:
+            current = reached[current]
+            path.append(current)
+
+        #or while reached[current] != start:
+        #path.append(reached[current])
+        #    current = reached[current]
+
+        path.reverse()
+    return path
