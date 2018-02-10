@@ -29,7 +29,7 @@ def least_cost_path(graph, start, dest, cost):
     events.insert([start, start], 0) # vertex s burns at time 0
 
 
-    while len(events) > 0:
+    while events.__len__() > 0:
         vertices, time = events.popmin()
         if vertices[1] not in reached:
             reached[vertices[1]] = vertices[0]# vertices[0] = reached[vertices[1]]   burn vertex v, record predecessor u
