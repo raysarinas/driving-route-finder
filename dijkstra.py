@@ -32,7 +32,7 @@ def least_cost_path(graph, start, dest, cost):
     while len(events) > 0:
         vertices, time = events.popmin()
         if vertices[1] not in reached:
-            vertices[0] = reached[vertices[1]]  # burn vertex v, record predecessor u
+            reached[vertices[1]] = vertices[0]# vertices[0] = reached[vertices[1]]   burn vertex v, record predecessor u
             for n in graph.neighbours(vertices[1]):  # new event: edge (v,w) started burning
                 events.insert(([vertices[1]], n), time + cost.distance(vertices[1], n))
 
