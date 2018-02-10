@@ -9,46 +9,12 @@ def least_cost_path(graph, start, dest, cost):
     events.insert((start, start), 0) # vertex s burns at time 0
 
     while len(events) > 0:
-        print("Loop 1")
-        vertices, time = events.popmin()
-        print(type(vertices))
-        print(type(vertices[0]))
-        if vertices[1] not in reached:
-            reached[vertices[1]] = vertices[0]# vertices[0] = reached[vertices[1]]   burn vertex v, record predecessor u
-            for n in graph.neighbours(vertices[1]):
-                 # new event: edge (v,w) started burning
-                print("Loop 2")
-                events.insert(([vertices[1]], n), time + cost.distance((vertices[1], n)))
-
-            if vertices[1] == dest:
-                break
-
-    #return reached
-    print("Done")
-    #find path to see if a path exists
-    # return empty list if dest cannot be reached/if no path from start to dest exists
-    if dest not in reached:
-      return []
-
-    # if the destination gets reached we can form a minimum path
-
-    current = dest
-    path = [current]
-
-    while current != start:
-        # print("Loop 3")
-        print(dest)
-        print(type(dest))
-        current = reached[current]
-        #current = reached[current]
-        path.append(current)
-
-    #or while reached[current] != start:
-    #path.append(reached[current])
-    #    current = reached[current]
-
-    path = path[::-1]
-    return path
+        edge, time = events.popmin()
+        if edge[1] not in reached:
+            reached[edge[1]] = edge[0]
+            for nbr in graph.neighbours(edge[1]):
+                events.insert((edge[1], nbr), time + cost.distance((edge[1], nbr)))
+    return reached
 
 ''' ------------------------------------ '''
 ''' ------------------------------------ '''
@@ -75,29 +41,91 @@ def load_edmonton_graph(filename):
 ''' ------------------------------------ '''
 ''' ------------------------------------ '''
 
-import math
-
 class CostDistance():
     def __init__(self, location):
         self.locDict = location
 
     def distance(self, e):
-        lon1, lat1 = self.locDict[e[0]]# self.location[u]
+        lon1, lat1 = self.locDict[e[0]]
         lon2, lat2 = self.locDict[e[1]]
-        e_dist = math.sqrt( (lat2 - lat1)**2 + (lon2 - lon1)**2 )
-        #e_dist = int(e_dist)
+        e_dist = math.sqrt( (lat2 - lat1) ** 2 + (lon2 - lon1) ** 2 )
         return e_dist
 
 ''' ------------------------------------ '''
 ''' ------------------------------------ '''
 
-#yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
-# location is a dict where keys are the vertices and holds a tuple of the coordinates
-print("start")
 yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
 cost = CostDistance(location)
-reached = least_cost_path(yegGraph, 30198538, 30198540, cost)
+request = input().strip().split(" ")
+valid = request[0]
+startcoord = [int(request[1]), int(request[2])]
+destination = [int(request[3]), int(request[4])]
+print(startcoord, destination)
+start = None
+end = None
+
+for vertex, point in location.items():
+    if point[0] == startcoord[0] and point[1] == startcoord[1]:
+        start = vertex
+    if point[0] == destination[0] and point[1] == destination[1]:
+        end = vertex
+
+if start == None or end == None:
+    print("god is dead")
+else:
+    print(start, end)
+
+reached = least_cost_path(yegGraph, start, end, cost)
+''' LEAST COST PATH KEEPS RETURNING 57779 IDK WHY '''
+waypoints = len(reached)
 print(reached)
+print(waypoints)
+
+
+    # response = input()
+    # if response == 'A':
+    #     print('W', )
+
+
+
+# shortest_path = least_cost_path(yegGraph, )
+#
+# yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
+# cost = CostDistance(location)
+# reached = least_cost_path(yegGraph, start, end, cost)
+# print(reached)
+'''
+request = input().strip().split(" ")
+valid = request[0]
+coord1 = [int(request[1]), int(request[2])]
+coord2 = [int(request[3]), int(request[4])]
+start = None
+end = None
+
+if valid == 'R':
+    for vertices, point in location.items():
+        if point[0] == coord1[0] and point[1] == coord1[1]:
+            start = vertices
+        if point[0] == coord2[0] and point[1] == coord2[1]:
+            end = vertices
+
+path = least_cost_path(yegGraph, start, end, cost)
+pathlen = len(path)
+print('N', pathlen)
+for i in range(pathlen):
+    response = input()
+    if response == 'A':
+        print('W', path)
+    print('E')
+'''
+        # reached_paths = least_cost_path(edmonton_Graph, startpoint, endpoint, costObject)
+        # print('N',len(reached_paths))
+        # for returns in range(len(reached_paths)):
+        #     returnmsg= input()
+        #     if returnmsg =='A':
+        #         print('W',reached_paths[returns])
+        # print('E')
+
 # if __name__ == "__main__":
 #     # Code for processing route finding requests here
 #
