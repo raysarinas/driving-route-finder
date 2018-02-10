@@ -21,7 +21,7 @@ class CostDistance():
         """
 
         u, v = e
-        lon1, lat1 = self.location[u]
-        lon2, lat2 = self.location[v]
+        lon1, lat1 = self.locDict[u]# self.location[u]
+        lon2, lat2 = self.locDict[v]
         e_dist = math.sqrt( (lat2[0] - lat1[0])**2 + (lon2[1] - lon1[1])**2 )
         return int(e_dist)
