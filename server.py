@@ -34,7 +34,7 @@ if __name__ == "__main__":
             elif coord[0] == test2[0] and coord[1] == test2[1]:
                 end = identity #int(identity)
 
-        reached = least_cost_path(yegGraph, start, end, cost)
+        reached = least_cost_path(yegGraph, 30198538, 30198540, cost)
         print('N', len(reached))
         for something in range(len(reached)):
             response = input()
