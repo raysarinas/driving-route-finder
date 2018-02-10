@@ -59,6 +59,7 @@ def checkinput():
     if response == 'A':
         print('W', lat, lon)
     else:
+        print('try again dumbass')
         checkinput()
 
 ''' ------------------------------------ '''
@@ -96,11 +97,3 @@ for path in reached:
     checkinput()
 
 print('E')
-
-'''    response = input()
-    if response == 'A':
-        print('W', lat, lon)
-    else: # THIS ELSE STATEMENT IS WEIRD BECAUSE IDK HOW TO ADD BACK
-            # OR DO THE THING JACOB WAS WORRIED ABOUT????? LIKE SKIPPING OVER A WAYPOINT OR WHATEVER
-        while response != 'A'
-        '''
