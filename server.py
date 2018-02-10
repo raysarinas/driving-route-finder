@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     if request[0] == 'R':
         for identity, coord in location.items():
-            if coord[0] == test1[0] and coord[1] == test2[1]:
+            if coord[0] == test1[0] and coord[1] == test1[1]:
                 start = identity #int(identity)
             elif coord[0] == test2[0] and coord[1] == test2[1]:
                 end = identity #int(identity)
