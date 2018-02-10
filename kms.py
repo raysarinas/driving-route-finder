@@ -54,6 +54,16 @@ class CostDistance():
 ''' ------------------------------------ '''
 ''' ------------------------------------ '''
 
+def checkinput():
+    response = input()
+    if response == 'A':
+        print('W', lat, lon)
+    else:
+        checkinput()
+
+''' ------------------------------------ '''
+''' ------------------------------------ '''
+
 yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
 cost = CostDistance(location)
 request = input().strip().split(" ")
@@ -79,84 +89,18 @@ reached = least_cost_path(yegGraph, start, end, cost)
 ''' LEAST COST PATH KEEPS RETURNING 57779 IDK WHY '''
 waypoints = len(reached)
 print(reached)
-print(waypoints)
+print('N', waypoints)
 
+for path in reached:
+    (lat, lon) = location[path]
+    checkinput()
 
-    # response = input()
-    # if response == 'A':
-    #     print('W', )
+print('E')
 
-
-
-# shortest_path = least_cost_path(yegGraph, )
-#
-# yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
-# cost = CostDistance(location)
-# reached = least_cost_path(yegGraph, start, end, cost)
-# print(reached)
-'''
-request = input().strip().split(" ")
-valid = request[0]
-coord1 = [int(request[1]), int(request[2])]
-coord2 = [int(request[3]), int(request[4])]
-start = None
-end = None
-
-if valid == 'R':
-    for vertices, point in location.items():
-        if point[0] == coord1[0] and point[1] == coord1[1]:
-            start = vertices
-        if point[0] == coord2[0] and point[1] == coord2[1]:
-            end = vertices
-
-path = least_cost_path(yegGraph, start, end, cost)
-pathlen = len(path)
-print('N', pathlen)
-for i in range(pathlen):
-    response = input()
+'''    response = input()
     if response == 'A':
-        print('W', path)
-    print('E')
-'''
-        # reached_paths = least_cost_path(edmonton_Graph, startpoint, endpoint, costObject)
-        # print('N',len(reached_paths))
-        # for returns in range(len(reached_paths)):
-        #     returnmsg= input()
-        #     if returnmsg =='A':
-        #         print('W',reached_paths[returns])
-        # print('E')
-
-# if __name__ == "__main__":
-#     # Code for processing route finding requests here
-#
-#
-#     request = input().strip().split(" ")
-#     vertices = list(yegGraph.get_vertices())
-#     request[1] = int(request[1])
-#     request[2] = int(request[2])
-#     request[3] = int(request[3])
-#     request[4] = int(request[4])
-#
-#     test1 = [int(request[1]), int(request[2])]
-#     test2 = [int(request[3]), int(request[4])]
-#     start = None
-#     end = None
-#     if request[0] == 'R':
-#         for identity, coord in location.items():
-#             if coord[0] == test1[0] and coord[1] == test1[1]:
-#                 start = identity #int(identity)
-#             elif coord[0] == test2[0] and coord[1] == test2[1]:
-#                 end = identity #int(identity)
-#
-#         reached = least_cost_path(yegGraph, 30198538, 30198540, cost)
-#         print('N', len(reached))
-#         for something in range(len(reached)):
-#             response = input()
-#             if response == 'A':
-#                 print('W', reached)
-#             else:
-#                 print("Invalid response")
-#                 something -= 1
-#         print('E')
-#     else:
-#         print('invalid request')
+        print('W', lat, lon)
+    else: # THIS ELSE STATEMENT IS WEIRD BECAUSE IDK HOW TO ADD BACK
+            # OR DO THE THING JACOB WAS WORRIED ABOUT????? LIKE SKIPPING OVER A WAYPOINT OR WHATEVER
+        while response != 'A'
+        '''
