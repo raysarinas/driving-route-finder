@@ -71,7 +71,7 @@ request = input().strip().split(" ")
 valid = request[0]
 startcoord = [int(request[1]), int(request[2])]
 destination = [int(request[3]), int(request[4])]
-print(startcoord, destination)
+# print(startcoord, destination)
 start = None
 end = None
 
@@ -83,10 +83,11 @@ for vertex, point in location.items():
 
 if start == None or end == None:
     print("god is dead")
-else:
-    print(start, end)
+# else:
+#     print(start, end)
 
 reached = least_cost_path(yegGraph, start, end, cost)
+''' SOMEONE FIX THIS PLEASE THANKS '''
 ''' LEAST COST PATH KEEPS RETURNING 57779 IDK WHY '''
 waypoints = len(reached)
 print(reached)
