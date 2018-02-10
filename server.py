@@ -17,13 +17,28 @@ yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
 if __name__ == "__main__":
     # Code for processing route finding requests here
     yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
+    cost = CostDistance(location)
 
     request = input().strip().split(" ")
-    valid = False
-    vertices = yegGraph.get_vertices()
-    print(vertices)
+    vertices = list(yegGraph.get_vertices())
+    start = None
+    end = None
 
     if request[0] == 'R':
-        valid = True
+        for identity, coord in location.items():
+            if coord[0] == request[1] and coord[1] == request[2]:
+                start = int(identity)
+            elif coord[0] == request[3] and coord[1] == request[4]:
+                end = int(identity)
+
+        reached = least_cost_path(yegGraph, start, end, cost)
+        print('N', len(reached))
+        for something in range(len(reached)):
+            response = input()
+            if response == 'A':
+                print('W', reached[something])
+            else:
+                print("Invalid response")
+                something -= 1
     else:
         print('invalid request')
