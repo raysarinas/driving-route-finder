@@ -26,7 +26,7 @@ def least_cost_path(graph, start, dest, cost):
 
     reached = {} # empty dictionary
     events = BinaryHeap() # empty heap
-    events.insert([start, start], 0) # vertex s burns at time 0
+    events.insert((start, start), 0) # vertex s burns at time 0
 
 
     while events.__len__() > 0:
