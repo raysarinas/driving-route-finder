@@ -36,8 +36,8 @@ def least_cost_path(graph, start, dest, cost):
             for n in graph.neighbours(vertices[1]):  # new event: edge (v,w) started burning
                 events.insert(([vertices[1]], n), time + cost.distance((vertices[1], n)))
 
-            # if vertices[1] == dest:
-            #     break
+            if vertices[1] == dest:
+                break
 
     #return reached
 
