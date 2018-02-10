@@ -16,7 +16,7 @@ def load_edmonton_graph(filename):
     Note: the vertex identifiers should be converted to integers
       before being added to the graph and the dictionary.
       """
-    # filename = 'edmonton-roads-2.0.1.txt'
+    #filename = 'edmonton-roads-2.0.1.txt'
 
     with open(filename, 'r') as filename:
         graph = Graph()

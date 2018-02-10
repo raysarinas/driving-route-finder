@@ -7,12 +7,8 @@ from dijkstra import least_cost_path
 from build import load_edmonton_graph
 from cost import CostDistance
 
-yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
+#yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
 # location is a dict where keys are the vertices and holds a tuple of the coordinates
-
-
-
-
 
 if __name__ == "__main__":
     # Code for processing route finding requests here
@@ -27,9 +23,9 @@ if __name__ == "__main__":
     if request[0] == 'R':
         for identity, coord in location.items():
             if coord[0] == request[1] and coord[1] == request[2]:
-                start = int(identity)
+                start = identity #int(identity)
             elif coord[0] == request[3] and coord[1] == request[4]:
-                end = int(identity)
+                end = identity #int(identity)
 
         reached = least_cost_path(yegGraph, start, end, cost)
         print('N', len(reached))
