@@ -30,34 +30,43 @@ def least_cost_path(graph, start, dest, cost):
 
 
     while len(events) > 0:
+        print("Loop 1")
         vertices, time = events.popmin()
+        print(type(vertices))
+        print(type(vertices[0]))
         if vertices[1] not in reached:
             reached[vertices[1]] = vertices[0]# vertices[0] = reached[vertices[1]]   burn vertex v, record predecessor u
-            for n in graph.neighbours(vertices[1]):  # new event: edge (v,w) started burning
+            for n in graph.neighbours(vertices[1]):
+                 # new event: edge (v,w) started burning
+                print("Loop 2")
                 events.insert(([vertices[1]], n), time + cost.distance((vertices[1], n)))
 
             if vertices[1] == dest:
                 break
 
     #return reached
-
+    print("Done")
     #find path to see if a path exists
     # return empty list if dest cannot be reached/if no path from start to dest exists
     if dest not in reached:
       return []
 
     # if the destination gets reached we can form a minimum path
-    if dest in reached:
-        current = dest
-        path = [current]
 
-        while current != start:
-            current = reached[current]
-            path.append(current)
+    current = dest
+    path = [current]
 
-        #or while reached[current] != start:
-        #path.append(reached[current])
-        #    current = reached[current]
+    while current != start:
+        # print("Loop 3")
+        print(dest)
+        print(type(dest))
+        current = reached[current]
+        #current = reached[current]
+        path.append(current)
 
-        path = path[::-1]
+    #or while reached[current] != start:
+    #path.append(reached[current])
+    #    current = reached[current]
+
+    path = path[::-1]
     return path
