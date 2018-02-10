@@ -17,6 +17,10 @@ if __name__ == "__main__":
 
     request = input().strip().split(" ")
     vertices = list(yegGraph.get_vertices())
+    request[1] = int(request[1])
+    request[2] = int(request[2])
+    request[3] = int(request[3])
+    request[4] = int(request[4])
     start = None
     end = None
 
