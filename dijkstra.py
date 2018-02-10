@@ -54,11 +54,10 @@ def least_cost_path(graph, start, dest, cost):
         while current != start:
             current = reached[current]
             path.append(current)
-
+        path.append(start)
         #or while reached[current] != start:
         #path.append(reached[current])
         #    current = reached[current]
 
         path.reverse()
-        print(path.reverse())
     return path
