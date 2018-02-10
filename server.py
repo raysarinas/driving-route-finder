@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     request = input().strip().split(" ")
     valid = False
-    vertices = yegGraph.getVertices()
+    vertices = yegGraph.get_vertices()
     print(vertices)
 
     if request[0] == 'R':
