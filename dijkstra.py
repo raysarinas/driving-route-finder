@@ -60,4 +60,5 @@ def least_cost_path(graph, start, dest, cost):
         #    current = reached[current]
 
         path.reverse()
+        print(path.reverse())
     return path
