@@ -12,4 +12,16 @@ def least_cost_path(graph, start, dest, cost):
             reached[edge[1]] = edge[0]
             for nbr in graph.neighbours(edge[1]):
                 events.insert((edge[1], nbr), time + cost.distance((edge[1], nbr)))
-    return reached
+
+    if dest not in reached:
+      return []
+
+    current = dest
+    path = [current]
+
+    while current != start:
+        current = reached[current]
+        path.append(current)
+
+    path = path[::-1]
+    return path
