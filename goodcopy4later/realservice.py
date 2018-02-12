@@ -16,6 +16,7 @@ def checkinput():
         checkinput()
 
 
+--> startcoord, destination, location
 def findmin(s, end, loc):
     minStart = 1000000
     minEnd = 1000000

@@ -16,29 +16,43 @@ def checkinput():
     if response == 'A':
         print('W', lat, lon)
     else:
-        print('try again dumbass')
+        print('try again')
         checkinput()
 
+def euc_dist(point, coord):
+    sum = (point[0] - coord[0]) ** 2 + (point[1] - coord[1]) ** 2
+    dist = math.sqrt(sum)
+
+    return dist
+
+
 if __name__ == "__main__":
-    #yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
-    #cost = CostDistance(location)
+    yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
+    cost = CostDistance(location)
     request = input().strip().split(" ")
     valid = request[0]
     startcoord = [int(request[1]), int(request[2])]
     destination = [int(request[3]), int(request[4])]
-    start = None
-    end = None
+    minStart = float('inf')
+    minEnd = float('inf')
+    startV = None
+    endV = None
 
     for vertex, point in location.items():
-        # NEED TO DO THE MINIMUM CRAP THING HERE
-        '''if point[0] == startcoord[0] and point[1] == startcoord[1]:
-            start = vertex
-        if point[0] == destination[0] and point[1] == destination[1]:
-            end = vertex'''
+        startDist = euc_dist(point, startcoord)
+        endDist = euc_dist(point, destination)
+        if startDist <= minStart:
+            startV = vertex
+            minStart = startDist
+        if endDist <= minEnd:
+            endV = vertex
+            minEnd = endDist
+
+    start = startV
+    end = endV
 
     if start == None or end == None:
-        print("god is dead")
-        print("u can't find whatever input that was inputted probably")
+        print("try again xoxo - gossip girl")
 
     reached = least_cost_path(yegGraph, start, end, cost)
     waypoints = len(reached)
