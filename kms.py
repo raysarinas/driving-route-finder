@@ -97,13 +97,12 @@ if __name__ == "__main__":
     if start == None or end == None:
         print("god is dead")
         print("also can't find whatever input that was inputted probably")
+        # need a thing to find closest vertex?
+
     # else:
     #     print(start, end)
 
     reached = least_cost_path(yegGraph, start, end, cost)
-    ''' SOMEONE FIX THIS PLEASE THANKS '''
-    ''' LEAST COST PATH KEEPS RETURNING 57779 IDK WHY '''
-    ''' DO WE NEED TO FIND THE CLOSEST VERTEX? IM CONFUSED LIKE IDK WHATS HAPPENING '''
     waypoints = len(reached)
     print(reached)
     print('N', waypoints)

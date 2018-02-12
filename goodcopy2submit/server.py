@@ -30,10 +30,11 @@ if __name__ == "__main__":
     end = None
 
     for vertex, point in location.items():
-        if point[0] == startcoord[0] and point[1] == startcoord[1]:
+        # NEED TO DO THE MINIMUM CRAP THING HERE
+        '''if point[0] == startcoord[0] and point[1] == startcoord[1]:
             start = vertex
         if point[0] == destination[0] and point[1] == destination[1]:
-            end = vertex
+            end = vertex'''
 
     if start == None or end == None:
         print("god is dead")
