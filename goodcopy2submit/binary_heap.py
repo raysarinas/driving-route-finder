@@ -1,6 +1,3 @@
-# import graphviz
-# from heapviz import *
-
 class BinaryHeap:
     """
     An implementation of a binary heap using a list.

@@ -53,3 +53,6 @@ continues to be valid processes/requests made (i.e. requests made by inputting '
 using the keyboard), the individual waypoints and their coordinates will be printed
 until the endpoint vertex coordinates have been printed. The program ends when
 an 'E' is printed to the terminal.
+
+Misc:
+- took out the import viz stuff from binary_heap.py

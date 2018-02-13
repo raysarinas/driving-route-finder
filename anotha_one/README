@@ -1,0 +1,58 @@
+CMPUT 275
+Melisse Doroteo 1499913
+Raymond Sarinas 1476504
+
+Part of the code was developed from the following resources:
+- Assignment description
+- Dijkstra's Algorithm and Graph Search slides
+- Code developed from Exercise 2
+- Various portions of code from Zac/Omid (developed in class)
+- How we found a way to handle some errors:
+  http://forums.xkcd.com/viewtopic.php?t=65831
+
+Accessories:
+none
+
+Wiring instructions:
+none
+
+How to run code:
+- Type "python3 server.py" into terminal and input coordinates
+- Or, type "python3 server < test[number]-input.txt > mysol.txt" into the
+  terminal. [number] is the test number that is to be tested i.e. '00' or '01'
+
+Files (External) Used to Run server.py:
+- graph.py (class implementation of Graph class)
+- binary_heap.py (class implementation of BinaryHeap)
+- build.py (modified exercise 2 file to get graph of Edmonton roads)
+- cost.py (contains CostDistance class)
+- dijkstra.py (contains least_cost_path/implementation of Dijkstra's algorithm)
+
+Description (Slightly modified from assignment description):
+This is the first part of assignment 1 where we implemented a driving route
+finder for the Edmonton Area. In this first part we developed the server for
+the program using Python. This program implements Dijkstra's Algorithm to find
+the shortest/least cost path for a requested start and endpoint in the Edmonton
+Area. This program makes use of a modified version of a function for loading
+a graph of Edmonton, which was done for a previous exercise. Loading the Edmonton
+graph creates a Graph object with the streets and destination points from the
+provided text file, as well as a dictionary that holds said locations from the
+graph object. A CostDistance class was also implemented, which stores the
+location dictionary contains a method which calculates/returns the Euclidean
+distance between two vertices.
+
+The server, which is the main program file (i.e. all other files/required
+implementations are used in this file) receives and processes requests from the
+keyboard, by reading and writing to stdin and stdout. All requests made are made
+using the form of 'R [startpoint coordinates] [endpoint coordinates]'. The server
+processes this request by first finding the closest vertices in the roadmap of
+Edmonton to the start and endpoints and then computes the shortest path along
+Edmonton streets between the two vertices/points. The server prints out the number
+of waypoints it takes to get from the start to the endpoint, and if there
+continues to be valid processes/requests made (i.e. requests made by inputting 'A'
+using the keyboard), the individual waypoints and their coordinates will be printed
+until the endpoint vertex coordinates have been printed. The program ends when
+an 'E' is printed to the terminal.
+
+Misc:
+- took out the import viz stuff from binary_heap.py
