@@ -1,0 +1,22 @@
+CMPUT 275
+Melisse Doroteo 1499913
+Raymond Sarinas 1476504
+
+Part of the code was developed from the following resources:
+- Assignment description
+- Dijkstra's Algorithm and Graph Search slides
+- Code developed from Exercise 2
+
+Accessories:
+none
+
+Wiring instructions:
+none
+
+How to run code:
+- Type "python3 server.py" into terminal and input coordinates
+- Or, type "python3 server < test0*-input.txt > mysol.txt" where the * is 0 or 1
+
+Description:
+This is the first part of assignment 1 where we implemented a driving route finder for the Edmonton Area. In this first part
+we developed the server for the program using Python.

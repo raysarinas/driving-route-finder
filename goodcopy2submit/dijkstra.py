@@ -32,7 +32,8 @@ def least_cost_path(graph, start, dest, cost):
     if dest not in reached:
       return []
 
-
+    # finds min path
+    # start at the dest and continuosly and find the parent of current veterx until have reached starting vertex
     current = dest
     path = [current]
 
