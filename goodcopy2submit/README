@@ -18,5 +18,6 @@ How to run code:
 - Or, type "python3 server < test0*-input.txt > mysol.txt" where the * is 0 or 1
 
 Description:
-This is the first part of assignment 1 where we implemented a driving route finder for the Edmonton Area. In this first part
-we developed the server for the program using Python.
+This is the first part of assignment 1 where we implemented a driving route
+finder for the Edmonton Area. In this first part we developed the server for
+the program using Python.

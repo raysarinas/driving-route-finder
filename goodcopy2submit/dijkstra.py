@@ -17,6 +17,7 @@ def least_cost_path(graph, start, dest, cost):
     Note: the vertex identifiers should be converted to integers
     before being added to the graph and the dictionary.
     """
+    
     reached = {} # empty dictionary
     events = BinaryHeap() # empty heap
     events.insert((start, start), 0) # vertex s burns at time 0
@@ -32,8 +33,9 @@ def least_cost_path(graph, start, dest, cost):
     if dest not in reached:
       return []
 
-    # finds min path
-    # start at the dest and continuosly and find the parent of current veterx until have reached starting vertex
+    # finds minimum path
+    # start at the dest and continuosly and find the parent of current vertex
+    # until have reached starting vertex
     current = dest
     path = [current]
 

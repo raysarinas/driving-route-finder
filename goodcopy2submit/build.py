@@ -17,15 +17,21 @@ def load_edmonton_graph(filename):
       before being added to the graph and the dictionary.
      """
 
+    # get the file and open it
     with open(filename, 'r') as filename:
         graph = Graph()
         location = {}
 
+        # split at each comma and store data appropriately
         for line in filename:
             row = line.strip().split(",")
 
+            # if first character is a 'V' store vertex data
+            # elif first character is an 'E' store edge data
             if row[0] == "V":
                 graph.add_vertex(int(row[1]))
+
+                # store coordinates in location dictionary
                 latitude = int(float(row[2]) * 100000)
                 longitude = int(float(row[3]) * 100000)
                 location[int(row[1])] = (latitude, longitude)
