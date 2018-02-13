@@ -1,0 +1,20 @@
+Accessories:
+- Any computer/laptop/cellphone/Atari that runs python3
+
+References:
+- Used graph, breadth_first_search and binary_heap from Assignment section
+  on eClass
+
+Wiring Instructions:
+- Laptop/Computer/Cellphone/Typewriter/SpaceX Rocket ---> 5V Outlet
+
+How to Run the Code:
+- Type python3 server.py into terminal and input chosen coordinates
+- Or type python3 server < test0#-input.txt > mysol.txt where the # is 0 or 1
+
+Description:
+This program is a basic version of route finding for the Edmonton map. In this program,
+it will print in the terminal the latitudes and longitudes that the user must take
+in order to get from their chosen start latitude/longitude to their end location.
+In the program, it implements Dijkstra's Algorithm which gives the shortest path
+based on the time it takes to travel through the waypoints.
