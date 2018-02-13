@@ -27,6 +27,7 @@ def euc_dist(point, coord):
 
 
 if __name__ == "__main__":
+
     yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
     cost = CostDistance(location)
     request = input().strip().split(" ")
@@ -52,12 +53,17 @@ if __name__ == "__main__":
     end = endV
 
     if start == None or end == None:
-        print("try again xoxo - gossip girl")
+        print("u should never have gotten to this point")
+        print("try again xoxo")
+        print("               - gossip girl ;*")
 
     reached = least_cost_path(yegGraph, start, end, cost)
     waypoints = len(reached)
 
     print('N', waypoints)
+
+    if len(reached) == 0:
+        print("no path, please try again and restart program")
 
     for path in reached:
         (lat, lon) = location[path]
