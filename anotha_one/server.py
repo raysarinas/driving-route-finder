@@ -4,21 +4,27 @@ import math
 import sys
 
 def least_cost_path(graph, start, dest, cost):
-    """
-    Loads the graph of Edmonton from the given file.
-    Returns two items
-    graph: the instance of the class Graph() corresponding to the
-    directed graph from edmonton-roads-2.0.1.txt
-    location: a dictionary mapping the identifier of a vertex to
-    the pair (lat, lon) of geographic coordinates for that vertex.
-    These should be integers measuring the lat/lon in 100000-ths
-    of a degree.
-    In particular, the return statement in your code should be
-    return graph, location
-    (or whatever name you use for the variables).
-    Note: the vertex identifiers should be converted to integers
-    before being added to the graph and the dictionary.
-    """
+    """Find and return a least cost path in graph from start vertex to dest vertex.
+    Efficiency: If E is the number of edges, the run-time is
+      O( E log(E) ).
+    Args:
+      graph (Graph): The digraph defining the edges between the
+        vertices.
+      start: The vertex where the path starts. It is assumed
+        that start is a vertex of graph.
+      dest:  The vertex where the path ends. It is assumed
+        that dest is a vertex of graph.
+      cost:  A class with a method called "distance" that takes
+        as input an edge (a pair of vertices) and returns the cost
+        of the edge. For more details, see the CostDistance class
+        description below.
+    Returns:
+      list: A potentially empty list (if no path can be found) of
+        the vertices in the graph. If there was a path, the first
+        vertex is always start, the last is always dest in the list.
+        Any two consecutive vertices correspond to some
+        edge in graph.
+        """
 
     reached = {} # empty dictionary
     events = BinaryHeap() # empty heap
@@ -53,17 +59,18 @@ def least_cost_path(graph, start, dest, cost):
 def load_edmonton_graph(filename):
     """
     Loads the graph of Edmonton from the given file.
-    Returns two items
+    Args:
+      filename: file to be read and used to create an instance of a
+                Graph object.
+    Returns two items:
       graph: the instance of the class Graph() corresponding to the
         directed graph from edmonton-roads-2.0.1.txt
       location: a dictionary mapping the identifier of a vertex to
         the pair (lat, lon) of geographic coordinates for that vertex.
         These should be integers measuring the lat/lon in 100000-ths
         of a degree.
-    In particular, the return statement in your code should be
-      return graph, location
-    (or whatever name you use for the variables).
-    Note: the vertex identifiers should be converted to integers
+
+    Note: the vertex identifiers are converted to integers
       before being added to the graph and the dictionary.
      """
 
@@ -122,6 +129,7 @@ def checkrequest(validrequest):
     Check if request character is valid i.e. is equal to the character 'R'.
     If the request is not valid not, exit the program.
 
+    Args:
     validrequest: first character that is taken from the user input.
 
     Doesn't return anything.
@@ -133,7 +141,7 @@ def checkrequest(validrequest):
 
 def euc_dist(point, coord):
     """
-    Here point and coord are tuples that contain coordinates.
+    Args: point and coord are tuples that contain coordinates.
     Returns Euclidean distance between a point and coordinate.
     """
 
@@ -152,6 +160,7 @@ def process_input(request, location):
     then find the nearest vertex to the start and destination/end points
     requested.
 
+    Args:
     request: list of input contents holding initiating request character,
       and start and destination coordinates.
     location: a dictionary mapping the identifier of a vertex to

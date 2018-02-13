@@ -24,9 +24,6 @@ How to run code:
 Files (External) Used to Run server.py:
 - graph.py (class implementation of Graph class)
 - binary_heap.py (class implementation of BinaryHeap)
-- build.py (modified exercise 2 file to get graph of Edmonton roads)
-- cost.py (contains CostDistance class)
-- dijkstra.py (contains least_cost_path/implementation of Dijkstra's algorithm)
 
 Description (Slightly modified from assignment description):
 This is the first part of assignment 1 where we implemented a driving route
