@@ -1,16 +1,17 @@
+import math
 from graph import Graph
 from binary_heap import BinaryHeap
 from breadth_first_search import breadth_first_search
-import math
 from dijkstra import least_cost_path
 from build import load_edmonton_graph
 from cost import CostDistance
 
 def checkinput():
-    ''' checks if there is correct response from user to print out the next
-        waypoint for the least cost path. won't skip over a waypoint because
-        if input is incorrect will recursively wait until there is correct
-        response i guess. returns none and takes no parameters/arguments '''
+    """
+    Checks user input for response to print out the next waypoint coordinates.
+    Will not skip over a waypoint because if the input is invalid, function
+    will recursively call itself until there is a correct response.
+    """
 
     response = input()
     if response == 'A':
@@ -20,6 +21,11 @@ def checkinput():
         checkinput()
 
 def euc_dist(point, coord):
+    """
+    Here point and coord are tuples that contain coordinates
+    Returns Euclidean distance between a point and coordinate.
+    """
+
     sum = (point[0] - coord[0]) ** 2 + (point[1] - coord[1]) ** 2
     dist = math.sqrt(sum)
 
@@ -27,7 +33,7 @@ def euc_dist(point, coord):
 
 
 if __name__ == "__main__":
-
+    """ everything below is done according to assignment description """
     yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
     cost = CostDistance(location)
     request = input().strip().split(" ")
