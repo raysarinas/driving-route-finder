@@ -15,7 +15,7 @@ none
 
 How to run code:
 - Type "python3 server.py" into terminal and input coordinates
-- Or, type "python3 server < test0*-input.txt > mysol.txt" where the * is 0 or 1
+- Or, type "python3 server.py < test0*-input.txt > mysol.txt" where the * is 0 or 1
 
 Description:
 This is the first part of assignment 1 where we implemented a driving route
