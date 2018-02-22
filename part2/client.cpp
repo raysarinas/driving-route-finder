@@ -147,8 +147,6 @@ int main() {
 
         // TODO: communicate with the server to get the waypoints
 
-        
-
         // now we have stored the path length in
         // shared.num_waypoints and the waypoints themselves in
         // the shared.waypoints[] array, switch back to asking for the
