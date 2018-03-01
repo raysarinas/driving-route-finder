@@ -130,34 +130,41 @@ if __name__ == "__main__":
 
     		elif stripped[0] == 'R':
                 request = stripped.split()
+                print(request)
                 # get the start and end vertices
                 start, end = process_input(location, request)
+                print(start, end)
                 # find the shortest path maybe?
                 # reached = [] # make empty list but does it rly matter
                 reached = least_cost_path(yegGraph, start, end, cost)
                 waypoints = len(reached)
 
-                if waypoints == 0: # if no vertices reached then no path
-                    num_waypoints = "N 0\n" # msg to say no waypoints
-                    encoded = num_waypoints.encode("ASCII") # encode 4 arduino
-                    ser.write(encoded)
-
-                else: # if some vertices have been reached
+                if reached: # if reached is not empty
                     waystring = str(waypoints)
+                    print(waystring)
                     num_waypoints = "N " + waystring + "\n"
+                    print(num_waypoints)
                     encoded = num_waypoints.encode("ASCII")
                     ser.write(encoded)
                     continue
 
+                # might have to change this else statement but not sure
+                # if not reached:
+                else: # if no vertices reached then no path
+                    num_waypoints = "N 0\n" # msg to say no waypoints
+                    encoded = num_waypoints.encode("ASCII") # encode 4 arduino
+                    ser.write(encoded)
+
             elif stripped[0] == 'A':
-                if waypoints > 0: # reached
+                #if waypoints > 0: # reached
+                if reached:
                     waypoint = location[reached.pop(0)] # return a list/tuple?
                     print(waypoint) # USE THIS TO TEST WHAT IS GETTING RETURNED
                     lat, lon = str(waypoint[0]), str(waypoint[1])
                     msg = "W " + lat + " " + lon + "\n"
-                    waypoints -= 1
+                    #waypoints -= 1
 
-                else: # when length of the waypoints == 0, then finished:
+                else: # when finished:
                     msg = "E \n"
 
                 encoded = msg.encode("ASCII")
@@ -171,4 +178,4 @@ if __name__ == "__main__":
                 ser.write(encoded)
 
             sleep(2) # WHY SLEEP??????????????
-        # return 0 # not sure why but sure why not or not?
+        return 0 # not sure why but sure why not or not?
