@@ -136,6 +136,7 @@ int main() {
         start = get_cursor_lonlat();
         curr_mode = WAIT_FOR_STOP;
         status_message("TO?");
+        ''' add Serial print stuff apparently? maybe 4 testing '''
 
         // wait until the joystick button is no longer pushed
         while (digitalRead(clientpins::joy_button_pin) == LOW) {}
@@ -146,6 +147,14 @@ int main() {
         end = get_cursor_lonlat();
 
         // TODO: communicate with the server to get the waypoints
+        ''' serial print stuff for testing i guess
+
+            status message? wtf
+         '''
+        communicate(start, end);
+
+
+        ''' a lot of crap '''
 
         // now we have stored the path length in
         // shared.num_waypoints and the waypoints themselves in

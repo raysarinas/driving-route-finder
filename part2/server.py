@@ -122,19 +122,21 @@ if __name__ == "__main__":
         4. ????? something with client getting the coordinates idk
     '''
 
-    with Serial("/dev/ttyACM0", baudrate = 9600, timeout = 5) as ser:
+    with Serial("/dev/ttyACM0", baudrate = 9600, timeout = 1) as ser:
         while True:
             # infinite loop that echoes all messages from
             # the arduino to the terminal
-            line = ack.readline().decode("ASCII")
-            #line = ack.readline()
-    		#line_string = line.decode("ASCII")
-            stripped = line.rstrip("\r\n")
-    		#stripped = line_string.rstrip("\r\n")
+            line = ser.readline()
+    		line_string = line.decode("ASCII")
+    		stripped = line_string.rstrip("\r\n")
+
     		if not stripped:
     			#timeout and restart loop
     			continue
+
     		elif stripped == "R":
+                request = stripped.split()
+                process_input(location, request)
     			#send acknowledgement to server
     			out_line = "A" + "\n"
                 # iteration += 1
@@ -148,28 +150,3 @@ if __name__ == "__main__":
                 sleep(2) #sleep idk what this does ??????
     		else:
     			continue
-
-
-def acknowledge():
-    line = ack.readline().decode("ASCII")
-    stripped = line.rstrip("\r\n")
-    if stripped == 'A':
-        return True
-    elif not stripped:
-        return False
-    else:
-        return False
-
-def process_paths():
-    request = # a list from the client
-    startcoord = [int(request[1]), int(request[2])]
-    destination = [int(request[3]), int(request[4])]
-
-    start, dest = process_input(request, location)
-    # send this to client
-	out_line = "Iteration " + str(iteration) + "\n"
-	iteration += 1
-
-	encoded = out_line.encode("ASCII") # encode then write to arduino
-	ser.write(encoded)
-	sleep(2)
