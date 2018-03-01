@@ -115,13 +115,6 @@ if __name__ == "__main__":
     yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
     cost = CostDistance(location)
 
-    ''' ARDUINO SERIAL COMMUNICATION START HERE PROBABLY
-        1. need to initiate/start serial communication with arduino
-        2. then get the coordinates from client/arduino
-        3. calculate the num of waypoints and stuff
-        4. ????? something with client getting the coordinates idk
-    '''
-
     with Serial("/dev/ttyACM0", baudrate = 9600, timeout = 1) as ser:
         while True:
             # infinite loop that echoes all messages from
@@ -129,24 +122,53 @@ if __name__ == "__main__":
             line = ser.readline()
     		line_string = line.decode("ASCII")
     		stripped = line_string.rstrip("\r\n")
+            print(stripped)
 
     		if not stripped:
     			#timeout and restart loop
     			continue
 
-    		elif stripped == "R":
+    		elif stripped[0] == 'R':
                 request = stripped.split()
-                process_input(location, request)
-    			#send acknowledgement to server
-    			out_line = "A" + "\n"
-                # iteration += 1
-                encoded = out_line.encode("ASCII") # this is now encoded
-                # so can send/write it to arduino apparently or something idfk
+                # get the start and end vertices
+                start, end = process_input(location, request)
+                # find the shortest path maybe?
+                # reached = [] # make empty list but does it rly matter
+                reached = least_cost_path(yegGraph, start, end, cost)
+                waypoints = len(reached)
+
+                if waypoints == 0: # if no vertices reached then no path
+                    num_waypoints = "N 0\n" # msg to say no waypoints
+                    encoded = num_waypoints.encode("ASCII") # encode 4 arduino
+                    ser.write(encoded)
+
+                else: # if some vertices have been reached
+                    waystring = str(waypoints)
+                    num_waypoints = "N " + waystring + "\n"
+                    encoded = num_waypoints.encode("ASCII")
+                    ser.write(encoded)
+                    continue
+
+            elif stripped[0] == 'A':
+                if waypoints > 0: # reached
+                    waypoint = location[reached.pop(0)] # return a list/tuple?
+                    print(waypoint) # USE THIS TO TEST WHAT IS GETTING RETURNED
+                    lat, lon = str(waypoint[0]), str(waypoint[1])
+                    msg = "W " + lat + " " + lon + "\n"
+                    waypoints -= 1
+
+                else: # when length of the waypoints == 0, then finished:
+                    msg = "E \n"
+
+                encoded = msg.encode("ASCII")
+                ser.write(encoded)
+                continue # reloop this binch
+
+    		else:
+    			# something something handshake jacob knows i think
+                check = "%"
+                encoded = check.encode("ASCII")
                 ser.write(encoded)
 
-    			if acknowledge():
-                    process_paths()
-
-                sleep(2) #sleep idk what this does ??????
-    		else:
-    			continue
+            sleep(2) # WHY SLEEP??????????????
+        # return 0 # not sure why but sure why not or not?
