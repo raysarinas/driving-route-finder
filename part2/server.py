@@ -81,7 +81,7 @@ def euc_dist(point, coord):
 
 def process_input(request, location):
     # store list of input things into appropriate variables
-    #valid = request[0]
+    valid = request[0]
     startcoord = [int(request[1]), int(request[2])]
     destination = [int(request[3]), int(request[4])]
 
@@ -132,8 +132,9 @@ if __name__ == "__main__":
 				request = stripped.split()
 				print(request)
                 # get the start and end vertices
-				start, end = process_input(location, request)
-				print(start, end)
+                if request:
+					start, end = process_input(location, request)
+					print(start, end)
                 # find the shortest path maybe?
                 # reached = [] # make empty list but does it rly matter
 				reached = least_cost_path(yegGraph, start, end, cost)
