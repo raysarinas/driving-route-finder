@@ -81,13 +81,17 @@ def euc_dist(point, coord):
 
 def process_input(request, location):
     # store list of input things into appropriate variables
-    valid = request[0]
+    #valid = request[0]
     start_lat = int(request[1])
     start_lon = int(request[2])
     dest_lat = int(request[3])
     dest_lon = int(request[4])
-    startcoord = [start_lat, start_lon]
-    destination = [dest_lat, dest_lon]
+    startcoord = list()
+    destination = list()
+    startcoord.append(start_lat)
+    startcoord.append(start_lon)
+    destination.append(dest_lat)
+    destination.append(dest_lon)
 
     # initialize minimum start/end and start/end vertex values
     minStart = float('inf')
@@ -136,7 +140,7 @@ if __name__ == "__main__":
 				request = stripped.split()
 				print(request)
                 # get the start and end vertices
-				start, end = process_input(location, request)
+				start, end = process_input(request, location)
 				print(start, end)
                 # find the shortest path maybe?
                 # reached = [] # make empty list but does it rly matter
