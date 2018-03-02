@@ -1,4 +1,4 @@
-''' SERVER BEING USED FOR PART 2 💩
+''' SERVER BEING USED FOR PART 2
     I'll put back the docstring comment description thingamobobs later
 '''
 
@@ -81,7 +81,7 @@ def euc_dist(point, coord):
 
 def process_input(request, location):
     # store list of input things into appropriate variables
-    valid = request[0]
+    #valid = request[0]
     startcoord = [int(request[1]), int(request[2])]
     destination = [int(request[3]), int(request[4])]
 
@@ -90,9 +90,6 @@ def process_input(request, location):
     minEnd = float('inf')
     startV = None
     endV = None
-
-    # check if a valid request has been inputted
-    checkrequest(valid)
 
     # find the nearest vertex to the start and destination/end points
     # that have been inputted/requested
@@ -108,74 +105,76 @@ def process_input(request, location):
 
     return startV, endV
 
-def serial_communication():
-    # probably put the stuff below into here for cleaner code idfk
+
+
+
+
+
 
 if __name__ == "__main__":
-    yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
-    cost = CostDistance(location)
+	yegGraph, location = load_edmonton_graph('edmonton-roads-2.0.1.txt')
+	cost = CostDistance(location)
 
-    with Serial("/dev/ttyACM0", baudrate = 9600, timeout = 1) as ser:
-        while True:
+	with Serial("/dev/ttyACM0", baudrate = 9600, timeout = 1) as ser:
+		while True:
             # infinite loop that echoes all messages from
             # the arduino to the terminal
-            line = ser.readline()
-    		line_string = line.decode("ASCII")
-    		stripped = line_string.rstrip("\r\n")
-            print(stripped)
+			line = ser.readline()
+			line_string = line.decode("ASCII")
+			stripped = line_string.rstrip("\r\n")
+			print(stripped)
 
-    		if not stripped:
+			if not stripped:
     			#timeout and restart loop
-    			continue
+				continue
 
-    		elif stripped[0] == 'R':
-                request = stripped.split()
-                print(request)
+			elif stripped[0] == 'R':
+				request = stripped.split()
+				print(request)
                 # get the start and end vertices
-                start, end = process_input(location, request)
-                print(start, end)
+				start, end = process_input(location, request)
+				print(start, end)
                 # find the shortest path maybe?
                 # reached = [] # make empty list but does it rly matter
-                reached = least_cost_path(yegGraph, start, end, cost)
-                waypoints = len(reached)
+				reached = least_cost_path(yegGraph, start, end, cost)
+				waypoints = len(reached)
 
-                if reached: # if reached is not empty
-                    waystring = str(waypoints)
-                    print(waystring)
-                    num_waypoints = "N " + waystring + "\n"
-                    print(num_waypoints)
-                    encoded = num_waypoints.encode("ASCII")
-                    ser.write(encoded)
-                    continue
+				if reached: # if reached is not empty
+					waystring = str(waypoints)
+					print(waystring)
+					num_waypoints = "N " + waystring + "\n"
+					print(num_waypoints)
+					encoded = num_waypoints.encode("ASCII")
+					ser.write(encoded)
+					continue
 
                 # might have to change this else statement but not sure
                 # if not reached:
-                else: # if no vertices reached then no path
-                    num_waypoints = "N 0\n" # msg to say no waypoints
-                    encoded = num_waypoints.encode("ASCII") # encode 4 arduino
-                    ser.write(encoded)
+				else: # if no vertices reached then no path
+					num_waypoints = "N 0\n" # msg to say no waypoints
+					encoded = num_waypoints.encode("ASCII") # encode 4 arduino
+					ser.write(encoded)
 
-            elif stripped[0] == 'A':
+			elif stripped[0] == 'A':
                 #if waypoints > 0: # reached
-                if reached:
-                    waypoint = location[reached.pop(0)] # return a list/tuple?
-                    print(waypoint) # USE THIS TO TEST WHAT IS GETTING RETURNED
-                    lat, lon = str(waypoint[0]), str(waypoint[1])
-                    msg = "W " + lat + " " + lon + "\n"
+				if reached:
+					waypoint = location[reached.pop(0)] # return a list/tuple?
+					print(waypoint) # USE THIS TO TEST WHAT IS GETTING RETURNED
+					lat, lon = str(waypoint[0]), str(waypoint[1])
+					msg = "W " + lat + " " + lon + "\n"
                     #waypoints -= 1
 
-                else: # when finished:
-                    msg = "E \n"
+				else: # when finished:
+					msg = "E \n"
 
-                encoded = msg.encode("ASCII")
-                ser.write(encoded)
-                continue # reloop this binch
+				encoded = msg.encode("ASCII")
+				ser.write(encoded)
+				continue # reloop this binch
 
-    		else:
+			else:
     			# something something handshake jacob knows i think
-                check = "%"
-                encoded = check.encode("ASCII")
-                ser.write(encoded)
+				check = "%"
+				encoded = check.encode("ASCII")
+				ser.write(encoded)
 
-            sleep(2) # WHY SLEEP??????????????
-        return 0 # not sure why but sure why not or not?
+			sleep(2) # WHY SLEEP??????????????
