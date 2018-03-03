@@ -140,7 +140,7 @@ if __name__ == "__main__":
 				request = stripped.split()
 				print(request)
                 # get the start and end vertices
-				start, end = process_input(request, location)
+				start, end = process_input(location, request)
 				print(start, end)
                 # find the shortest path maybe?
                 # reached = [] # make empty list but does it rly matter
