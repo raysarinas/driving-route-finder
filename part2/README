@@ -12,7 +12,6 @@ Accessories:
 Wiring instructions:
 
 TFT Display:
-
     The display pins are numbered left to right in this document when they are being viewed
     with their labels showing rightside up. Note you do not require the touchscreen for this assignment,
     so it is probably a lot easier to not wire the Y+/X+/Y-/X- pins.
@@ -30,13 +29,11 @@ TFT Display:
     19 CCS          Pin 6
 
 Zoom in and out buttons:
-
     Button          Arduino Mega Pin
     Zoom In         Pin 2
     Zoom Out        Pin 3
 
 Joystick connections:
-
     Joystick Pin    Arduino Mega Pin
     +5v             Vcc
     GND             GND
@@ -47,7 +44,7 @@ Joystick connections:
 
 How to run code:
 - Type into terminal the client file and then 'make upload' to run client
-- Open up a new terminal and type "python3 server.py" to run server
+- Open up a new terminal and open a new directory fro the server. Type "python3 server.py" to run server
 
 How to run the Route-finder program:
 - Pick any point on the map using the joystick
@@ -68,12 +65,13 @@ Files (External) Used to Run client.py:
 - map_drawing.cpp
 - map_drawing.h
 
-Description (Slightly modified from assignment description):
-
+Description:
 Continuing form Assignment 1 Part 1, we implemented the Arduino side of the assignment which were
 to modify the server from part 1 so that it can communicate over the serial port and
 augment the provided Arduino client program so that it sends a request to the route
 finding server and draws a route.
 
 Misc:
-bugs i guess
+- Will sometimes timeout so please restart program and re-upload
+- We did not finish the drawing function but to prove that we were able to get the waypoints we printed
+the points onto the serial monitor.
