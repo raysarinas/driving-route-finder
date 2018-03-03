@@ -71,7 +71,10 @@ to modify the server from part 1 so that it can communicate over the serial port
 augment the provided Arduino client program so that it sends a request to the route
 finding server and draws a route.
 
-Misc:
+Helpful Notes:
 - Will sometimes timeout so please restart program and re-upload
 - We did not finish the drawing function but to prove that we were able to get the waypoints we printed
-the points onto the serial monitor.
+the points onto the serial monitor for the python server.
+- tty things
+- Does not print E at the end of request but sometimes does. Instead still prints A.
+- 
