@@ -1,6 +1,6 @@
 CMPUT 275
-Melisse Doroteo 1499913
-Raymond Sarinas 1476504
+Melisse Doroteo
+Raymond Sarinas
 
 Part of the code was developed from the following resources:
 - Assignment developed in Part 1
@@ -77,4 +77,4 @@ Helpful Notes:
 the points onto the serial monitor for the python server.
 - tty things
 - Does not print E at the end of request but sometimes does. Instead still prints A.
-- 
+-

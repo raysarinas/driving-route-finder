@@ -1,6 +1,7 @@
 # driving-route-finder
 
-SOS if you're in 275 please (send) help
+For future 275 students:
+The only thing that works is the server in part 2 so don't bother copying
 
 TO DO:
 
