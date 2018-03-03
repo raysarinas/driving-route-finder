@@ -158,8 +158,8 @@ void communicate(lon_lat_32 start, lon_lat_32 end){
         }
         if (incomingByte == -1) continue;
         // if there is nothing in Serial.read we skip over
-        if (incomingByte == '%') continue;
-        // from python server we send '%' when things don't go perfect in the
+        //if (incomingByte == 'START') continue;
+        // from python server we send 'START' when things don't go perfect in the
         // handshaking process so we have this case to skip over it if it pops up
         if (incomingByte == '-') continue;
         // We deal with the negative longitude in another way at another point
@@ -233,8 +233,8 @@ void communicate(lon_lat_32 start, lon_lat_32 end){
         }
         if (incomingByte == -1) continue;
         // if there is nothing in Serial.read we skip over
-        if (incomingByte == '%') continue;
-        // from python server we send '%' when things don't go perfect in the
+        //if (incomingByte == 'START') continue;
+        // from python server we send 'START' when things don't go perfect in the
         // handshaking process so we have this case to skip over it if it pops up
         if (incomingByte == 'N') {
           // Want to make sure that what is being stored are waypoints
@@ -247,10 +247,9 @@ void communicate(lon_lat_32 start, lon_lat_32 end){
         N_path += (incomingByte - 48);
         end_timeout = millis() - start_timeout;
         if (end_timeout > 10000) {
-         // timeout if more than 10 seconds pass
-         curr_state = Ending;
+          // timeout if more than 10 seconds pass
+          curr_state = Ending;
         }
-
 
       }
 
@@ -276,7 +275,53 @@ void communicate(lon_lat_32 start, lon_lat_32 end){
 
 }
 
-void talk(lon_lat_32 start, lon_lat_32 end) {
+void drawingPath(lon_lat_32 start, lon_lat_32 end){
+//added code
+//draw line from start to first Wave(if they are in the display)
+int32_t starty = latitude_to_y(shared.map_number,start.lat)-shared.map_coords.y;
+int32_t startx = longitude_to_x(shared.map_number,start.lon)-shared.map_coords.x;
+int32_t endy = latitude_to_y(shared.map_number,shared.waypoints[0].lat)-shared.map_coords.y;
+int32_t endx = longitude_to_x(shared.map_number,shared.waypoints[0].lon)-shared.map_coords.x;
+
+starty = constrain(starty, 0, 216);
+endy = constrain(endy,0,216);
+
+
+  shared.tft-> drawLine(longitude_to_x(shared.map_number, start.lon)-shared.map_coords.x,
+  latitude_to_y(shared.map_number,start.lat)-shared.map_coords.y,
+  longitude_to_x(shared.map_number,shared.waypoints[0].lon)-shared.map_coords.x,
+  latitude_to_y(shared.map_number, shared.waypoints[0].lat)-shared.map_coords.y,ILI9341_BLUE);
+
+
+//Draw lines in between the wavepoints
+for(int k = 0; k < (shared.num_waypoints-1);k++){
+  //calling these a seperate variable so don't have to keep wrting these entire lines
+  int32_t startwavey = latitude_to_y(shared.map_number,shared.waypoints[k].lat)-shared.map_coords.y;
+  int32_t startwavex = longitude_to_x(shared.map_number,shared.waypoints[k].lon)-shared.map_coords.x;
+  int32_t endwavey = latitude_to_y(shared.map_number,shared.waypoints[k+1].lat)-shared.map_coords.y;
+  int32_t endwavex = longitude_to_x(shared.map_number,shared.waypoints[k+1].lon)-shared.map_coords.x;
+  startwavey = constrain(startwavey, 0, 216);
+  endwavey = constrain(endwavey,0,216);
+  //if the 2 Wavepoints are is in the same screen as the display(shared.map_coords is the top left of the display)
+  //We add 320 as x spams to the width of the display and add 216 becuase the y spams to (240-24)becuase of the
+  //message prompt
+
+    shared.tft-> drawLine(startwavex,startwavey,endwavex,endwavey,ILI9341_BLUE);
+}
+
+//Draw last line between last wavepoint and destination, if in the display range
+starty = latitude_to_y(shared.map_number,shared.waypoints[shared.num_waypoints-1].lat)-shared.map_coords.y;
+startx = longitude_to_x(shared.map_number,shared.waypoints[shared.num_waypoints-1].lon)-shared.map_coords.x;
+endy = latitude_to_y(shared.map_number,end.lat)-shared.map_coords.y;
+endx = longitude_to_x(shared.map_number,end.lon)-shared.map_coords.x;
+
+starty = constrain(starty, 0, 216);
+endy = constrain(endy,0,216);
+  shared.tft-> drawLine(startx,starty,endx,endy,ILI9341_BLUE);
+
+}
+
+void talkme(lon_lat_32 start, lon_lat_32 end) {
   // this fun stuff is what allows for communication between
   // the arduino/client and python server to happen I guess
 
@@ -331,8 +376,8 @@ void talk(lon_lat_32 start, lon_lat_32 end) {
         // something something idk
         incoming = Serial.read(); // read the incoming byte(s)
 
-        // can we use a SWITCH thing to make this better or nah?
-        if (incoming == (-1 || '%' || ' ')) {
+        //can we use a SWITCH thing to make this better or nah?
+        if (incoming == (-1 || ' ' || 'S')) {
           continue; // if nothing in serial read
           // or if handshaking is weird or to skip over spaces
         }
@@ -347,36 +392,31 @@ void talk(lon_lat_32 start, lon_lat_32 end) {
 
           if (got_waypoints) {
 
-            if ((n_waypoints != 0) && n_waypoints <= 499) {
+            if (n_waypoints == 0) { // if N == 0 or > 499
+              Serial.write('E');
+              current_state = Done;
+              n_waypoints = 0;
+              got_waypoints = false;
+              break;
+            }
+
+            else {
               current_state = Wait4W; // if range of waypoints O.K. continue to next state
+              if (n_waypoints > 499) {
+                Serial.write('E');
+                current_state = Done;
+                break;
+              }
               shared.num_waypoints = n_waypoints; // get the 'N' thing from server i think?
               Serial.write('A');
               got_waypoints = false; // reset the checker thingy so doesn't mess up
             }
 
-            if (n_waypoints > 499) { // too many paths, then treat as no waypoints/path
-              Serial.write('A');
-              current_state = Done;
-              break;
-            }
-
-            if ((n_waypoints == 0) || (n_waypoints > 499)) { // if N == 0 or > 499
-              Serial.write('A');
-              current_state = Done;
-
-              if (n_waypoints == 0) {
-                n_waypoints = 0;
-                got_waypoints = false;
-              }
-              break;
-            } // end of else
 
           }
           break; // IDK WHY THO
         }
 
-        // n_waypoints *= 10;
-        // n_waypoints += (incoming - 48);
         n_waypoints = (n_waypoints*10) + incoming - 48; // IDK WHAT THIS IS
 
         if ((millis() - timeout) > 10000) {
@@ -389,7 +429,7 @@ void talk(lon_lat_32 start, lon_lat_32 end) {
       while (true) { // anotha one so know to store all crap?
         incoming = Serial.read();
 
-        if (incoming == (-1 || '%' || '-')) {
+        if (incoming == (-1 || 'S' || '-')) {
           continue; // if nothing in serial read
           // or if handshaking is weird or to skip over spaces
         }
@@ -398,6 +438,25 @@ void talk(lon_lat_32 start, lon_lat_32 end) {
           // make sure got data
           got_waypoints = true;
           continue;
+        }
+
+        if (incoming == '\n') {
+          if (got_waypoints) {
+            shared.waypoints[path].lon = waypoint * -1;
+            path = path + 1;
+            if  (path == n_waypoints) {
+              current_state = Done;
+              n_waypoints = 0;
+              path = 0;
+              got_waypoints = false;
+              Serial.write('E');
+            }
+            else { Serial.write('A'); }
+            got_waypoints = false;
+            count = 1;
+            waypoint = 0;
+          }
+          break;
         }
 
         if ((incoming == ' ') && (check1)) {
@@ -411,9 +470,25 @@ void talk(lon_lat_32 start, lon_lat_32 end) {
           // values this waypoint has. we store it and clear our temp out
           check1 = false;
           check2 = false;
-          shared.waypoints[path].lat = W_lat_long;
+          shared.waypoints[path].lat = waypoint;
           waypoint = 0;
           continue;
+        }
+
+        if (incoming == ' ') {
+          if (check1) {
+            check1 = false;
+            check2 = true;
+            continue;
+          }
+          else if (check2 && got_waypoints) {
+            check1 = false;
+            check2 = false;
+            shared.waypoints[path].lat = waypoint;
+            waypoint = 0;
+            continue;
+
+          }
         }
 
         // something something numeric value crap
@@ -435,55 +510,6 @@ void talk(lon_lat_32 start, lon_lat_32 end) {
 
 }
 
-void drawingPath(lon_lat_32 start, lon_lat_32 end){
-//added code
-//draw line from start to first Wave(if they are in the display)
-int32_t starty = latitude_to_y(shared.map_number,start.lat)-shared.map_coords.y;
-int32_t startx = longitude_to_x(shared.map_number,start.lon)-shared.map_coords.x;
-int32_t endy = latitude_to_y(shared.map_number,shared.waypoints[0].lat)-shared.map_coords.y;
-int32_t endx = longitude_to_x(shared.map_number,shared.waypoints[0].lon)-shared.map_coords.x;
-
-
-//contraints
-starty = constrain(starty, 0, 216);
-endy = constrain(endy,0,216);
-
-
-  shared.tft-> drawLine(longitude_to_x(shared.map_number, start.lon)-shared.map_coords.x,
-  latitude_to_y(shared.map_number,start.lat)-shared.map_coords.y,
-  longitude_to_x(shared.map_number,shared.waypoints[0].lon)-shared.map_coords.x,
-  latitude_to_y(shared.map_number, shared.waypoints[0].lat)-shared.map_coords.y,ILI9341_BLUE);
-
-
-//Draw lines in between the wavepoints
-for(int k = 0; k < (shared.num_waypoints-1);k++){
-  //calling these a seperate variable so don't have to keep wrting these entire lines
-  int32_t startwavey = latitude_to_y(shared.map_number,shared.waypoints[k].lat)-shared.map_coords.y;
-  int32_t startwavex = longitude_to_x(shared.map_number,shared.waypoints[k].lon)-shared.map_coords.x;
-  int32_t endwavey = latitude_to_y(shared.map_number,shared.waypoints[k+1].lat)-shared.map_coords.y;
-  int32_t endwavex = longitude_to_x(shared.map_number,shared.waypoints[k+1].lon)-shared.map_coords.x;
-  // startwavey = constrain(startwavey, 0, 216);
-  // endwavey = constrain(endwavey,0,216);
-
-
-  //if the 2 Wavepoints are is in the same screen as the display(shared.map_coords is the top left of the display)
-  //We add 320 as x spams to the width of the display and add 216 becuase the y spams to (240-24)becuase of the
-  //message prompt
-
-  shared.tft-> drawLine(startwavex,startwavey,endwavex,endwavey,ILI9341_BLUE);
-}
-
-//Draw last line between last wavepoint and destination, if in the display range
-starty = latitude_to_y(shared.map_number,shared.waypoints[shared.num_waypoints-1].lat)-shared.map_coords.y;
-startx = longitude_to_x(shared.map_number,shared.waypoints[shared.num_waypoints-1].lon)-shared.map_coords.x;
-endy = latitude_to_y(shared.map_number,end.lat)-shared.map_coords.y;
-endx = longitude_to_x(shared.map_number,end.lon)-shared.map_coords.x;
-
-starty = constrain(starty, 0, 216);
-endy = constrain(endy,0,216);
-  shared.tft-> drawLine(startx,starty,endx,endy,ILI9341_BLUE);
-
-}
 
 int main() {
   setup();
@@ -569,7 +595,8 @@ int main() {
         //etc....
 
         //communicate(start, end);
-        talk(start, end);
+        talkme(start, end);
+
         draw_map(); //gets rid of previously drawn paths
         draw_cursor();
         drawingPath(start,end);  //where drawing of map occurs
