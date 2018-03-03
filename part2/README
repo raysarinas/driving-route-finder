@@ -1,0 +1,79 @@
+CMPUT 275
+Melisse Doroteo 1499913
+Raymond Sarinas 1476504
+
+Part of the code was developed from the following resources:
+- Assignment developed in Part 1
+
+Accessories:
+- Arduino
+- TFT display
+
+Wiring instructions:
+
+TFT Display:
+
+    The display pins are numbered left to right in this document when they are being viewed
+    with their labels showing rightside up. Note you do not require the touchscreen for this assignment,
+    so it is probably a lot easier to not wire the Y+/X+/Y-/X- pins.
+
+    Display Pin     Arduino Mega Pin
+    1 GND           BB GND bus
+    2 Vin           BB Vcc (+ive) bus
+
+    4 CLK           Pin 52
+    5 MISO          Pin 50
+    6 MOSI          Pin 51
+    7 CS            Pin 10
+    8 D/C           Pin 9
+
+    19 CCS          Pin 6
+
+Zoom in and out buttons:
+
+    Button          Arduino Mega Pin
+    Zoom In         Pin 2
+    Zoom Out        Pin 3
+
+Joystick connections:
+
+    Joystick Pin    Arduino Mega Pin
+    +5v             Vcc
+    GND             GND
+    VRx             Analog 1
+    VRy             Analog 0
+    SW              Pin 8
+
+
+How to run code:
+- Type into terminal the client file and then 'make upload' to run client
+- Open up a new terminal and type "python3 server.py" to run server
+
+How to run the Route-finder program:
+- Pick any point on the map using the joystick
+- The buttons are for to zoom in and zoom out of the map
+- Pick a second location for your destination
+- After this the the Arduino will say "Recieving Waypoints"
+- When the program is finished running the Arduino should display a route.
+
+Files (External) Used to Run server.py:
+- graph.py (class implementation of Graph class)
+- binary_heap.py (class implementation of BinaryHeap)
+
+Files (External) Used to Run client.py:
+- consts_and_types.h
+- lcd_image.cpp
+- lcd_image.h
+- Makefile
+- map_drawing.cpp
+- map_drawing.h
+
+Description (Slightly modified from assignment description):
+
+Continuing form Assignment 1 Part 1, we implemented the Arduino side of the assignment which were
+to modify the server from part 1 so that it can communicate over the serial port and
+augment the provided Arduino client program so that it sends a request to the route
+finding server and draws a route.
+
+Misc:
+bugs i guess
