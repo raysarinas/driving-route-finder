@@ -9,6 +9,9 @@ shared_vars shared;
 
 Adafruit_ILI9341 tft = Adafruit_ILI9341(clientpins::tft_cs, clientpins::tft_dc);
 
+enum {WAIT_FOR_START,SEND_REQ,WAIT_FOR_ACK,SEND_DATA,RECIEVE_DATA,WAIT_FOR_STOP} curr_mode = WAIT_FOR_START;
+
+
 void setup() {
   // initialize Arduino
   init();
