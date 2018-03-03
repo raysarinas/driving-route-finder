@@ -110,15 +110,35 @@ void talk(lon_lat_32 start, lon_lat_32 end) {
       while (true) { // anotha one so know to store all crap?
         incoming = Serial.read();
 
-        if (incoming == (-1 || '%' || '-')) {
+        if (incoming == (-1 || '%') {
           continue; // if nothing in serial read
           // or if handshaking is weird or to skip over spaces
         }
+
+        if (incoming == '-') { continue; }
 
         if (incoming == 'W') { // DO WE NEED THIS CHECK????
           // make sure got data
           got_waypoints = true;
           continue;
+        }
+
+        if (incoming == '\n') {
+          if (got_waypoints) {
+            shared.waypoints[path].lon = -1*waypoint;
+            path += 1;
+            if  (path == n_waypoints) {
+              current_state = Done;
+              n_waypoints = 0;
+              path = 0;
+              got_waypoints = false;
+            }
+            Serial.write('A');
+            got_waypoints = false;
+            count = 1;
+            waypoint = 0;
+          }
+          break;
         }
 
         if ((incoming == ' ') && (check1)) {
