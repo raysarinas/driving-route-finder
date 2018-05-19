@@ -1,5 +1,4 @@
 ''' SERVER BEING USED FOR PART 2
-    I'll put back the docstring comment description thingamobobs later
 '''
 
 from graph import Graph

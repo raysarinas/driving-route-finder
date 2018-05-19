@@ -1,7 +1,7 @@
 # driving-route-finder
 
 For future 275 students:
-The only thing that works is the server in part 2 so don't bother copying
+Haven't uploaded the finished version so don't bother copying
 
 TO DO:
 

@@ -276,48 +276,12 @@ void communicate(lon_lat_32 start, lon_lat_32 end){
 }
 
 void drawingPath(lon_lat_32 start, lon_lat_32 end){
-//added code
-//draw line from start to first Wave(if they are in the display)
-int32_t starty = latitude_to_y(shared.map_number,start.lat)-shared.map_coords.y;
-int32_t startx = longitude_to_x(shared.map_number,start.lon)-shared.map_coords.x;
-int32_t endy = latitude_to_y(shared.map_number,shared.waypoints[0].lat)-shared.map_coords.y;
-int32_t endx = longitude_to_x(shared.map_number,shared.waypoints[0].lon)-shared.map_coords.x;
 
-starty = constrain(starty, 0, 216);
-endy = constrain(endy,0,216);
-
-
-  shared.tft-> drawLine(longitude_to_x(shared.map_number, start.lon)-shared.map_coords.x,
-  latitude_to_y(shared.map_number,start.lat)-shared.map_coords.y,
-  longitude_to_x(shared.map_number,shared.waypoints[0].lon)-shared.map_coords.x,
-  latitude_to_y(shared.map_number, shared.waypoints[0].lat)-shared.map_coords.y,ILI9341_BLUE);
-
-
-//Draw lines in between the wavepoints
-for(int k = 0; k < (shared.num_waypoints-1);k++){
-  //calling these a seperate variable so don't have to keep wrting these entire lines
-  int32_t startwavey = latitude_to_y(shared.map_number,shared.waypoints[k].lat)-shared.map_coords.y;
-  int32_t startwavex = longitude_to_x(shared.map_number,shared.waypoints[k].lon)-shared.map_coords.x;
-  int32_t endwavey = latitude_to_y(shared.map_number,shared.waypoints[k+1].lat)-shared.map_coords.y;
-  int32_t endwavex = longitude_to_x(shared.map_number,shared.waypoints[k+1].lon)-shared.map_coords.x;
-  startwavey = constrain(startwavey, 0, 216);
-  endwavey = constrain(endwavey,0,216);
-  //if the 2 Wavepoints are is in the same screen as the display(shared.map_coords is the top left of the display)
-  //We add 320 as x spams to the width of the display and add 216 becuase the y spams to (240-24)becuase of the
-  //message prompt
-
-    shared.tft-> drawLine(startwavex,startwavey,endwavex,endwavey,ILI9341_BLUE);
-}
-
-//Draw last line between last wavepoint and destination, if in the display range
-starty = latitude_to_y(shared.map_number,shared.waypoints[shared.num_waypoints-1].lat)-shared.map_coords.y;
-startx = longitude_to_x(shared.map_number,shared.waypoints[shared.num_waypoints-1].lon)-shared.map_coords.x;
-endy = latitude_to_y(shared.map_number,end.lat)-shared.map_coords.y;
-endx = longitude_to_x(shared.map_number,end.lon)-shared.map_coords.x;
-
-starty = constrain(starty, 0, 216);
-endy = constrain(endy,0,216);
-  shared.tft-> drawLine(startx,starty,endx,endy,ILI9341_BLUE);
+  int32_t x1 = longitude_to_x(shared.map_number,start.lon) - shared.map_coords.x;
+  int32_t x2 = longitude_to_x(shared.map_number, end.lon) - shared.map_coords.x;
+  int32_t y1 = latitude_to_y(shared.map_number, start.lat) - shared.map_coords.y;
+  int32_t y2 = latitude_to_y(shared.map_number, end.lat) - shared.map_coords.y;
+  shared.tft->drawLine(x1, y1, x2, y2, ILI9341_BLUE);
 
 }
 
